@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<title>Insert title here</title>
+</head>
+<body>
+	 
+	<header>
+	
+	</header>
+	
+	<content>
+		<span></span>
+		<span></span>
+	</content>
+
+
+
+<script type=“text/javascript”>
+var mgttWebSocket = null;
+ 
+	mgttWebSocket = new SockJS("http://localhost:8080/websocket");
+    
+    mgttWebSocket.onOpen = function(message) {
+        
+    };
+    
+
+    mgttWebSocket.onMessage = function(message) {
+         message.data ;
+    };
+
+    mgttWebSocket.onClose = function(message) {
+       
+    };
+ 
+    mgttWebSocket.onError = function(message) {
+         
+    };
+
+function rebootButton_onclick() {
+    var inputMsgBox = document.getElementById(“inputMsgBox”);
+    if (inputMsgBox == null || inputMsgBox.value == null || inputMsgBox.value.length == 0) {
+        return false;
+    }
+    
+    var chatBoxArea = document.getElementById(“chatBoxArea”);
+    
+    if (mgttWebSocket == null || mgttWebSocket.readyState == 3) {
+        chatBoxArea.value += “Server is disconnected.\n”;
+        return false;
+    }
+    
+    // 서버로 메시지 전송
+    mgttWebSocket.send(inputMsgBox.value);
+    inputMsgBox.value = “”;
+    inputMsgBox.focus();
+    
+    return true;
+}
+
+/**
+* Disconnect 버튼 클릭하는 경우 호출
+*/
+function disconnectButton_onclick() {
+    if (mgttWebSocket != null) {
+        mgttWebSocket.close();    
+    }
+}
+
+</script>
+
+</body>
+</html>
