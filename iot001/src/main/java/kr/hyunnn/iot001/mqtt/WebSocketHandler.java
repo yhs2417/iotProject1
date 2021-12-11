@@ -1,8 +1,11 @@
 package kr.hyunnn.iot001.mqtt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
@@ -15,31 +18,38 @@ import lombok.NoArgsConstructor;
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
 
-	private static List<WebSocketSession> list = new ArrayList<>();
-
+	private static List<WebSocketSession> webSessions = new ArrayList<>();
+	
+ 
+	
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
-        list.add(session);
-
-       
+    	System.out.println("ws connected");
+    
+    	webSessions.add(session);   
     }
 
 	@Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String payload = message.getPayload();
-        
-        for(WebSocketSession sess: list) {
-            sess.sendMessage(message);
-        }
-    }   
+    	System.out.println("ws msg=" + payload);
 
+         
+    }   
+	public void sendMsg(String msg) throws Exception {
+		System.out.println("in sendmsg");
+		for(WebSocketSession session: webSessions) {
+			if (session == null ) continue;
+			
+			session.sendMessage(new TextMessage(msg));
+		}
+	}
+ 
+	
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
-       
-        list.remove(session);
+    	System.out.println("ws disconnected");
+    	 
+    	webSessions.remove(session);
     }
-
-
 }

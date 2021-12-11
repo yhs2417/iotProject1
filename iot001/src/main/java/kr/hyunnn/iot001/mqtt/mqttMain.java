@@ -9,28 +9,33 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
+@Component
 public class mqttMain implements MqttCallback{
 	private MqttClient client;
     private MqttConnectOptions option;
     private Thread subscribeThread;
     private boolean subscribeThreadLifeFlag = true;
 
-    private static JSONParser parser = new JSONParser();
+    private JSONParser parser = new JSONParser();
     private JSONObject jsonObj;
     
     private String recvMsg;
 	private Object obj;
-	private Double humidity;
-	private Double temperature;
+	private double humidity;
+	private double temperature;
    
+	@Autowired
+	private WebSocketHandler webSocketHandler;
 	
 	public void setsubscribeThreadLifeFlag(boolean lifeFlag) {
 		this.subscribeThreadLifeFlag = lifeFlag;
 	}
 	
-    public void init(String serverURI, String clientId, String topic) {
+    public Thread init(String serverURI, String clientId, String topic) {
 		  	
 		subscribeThread = new Thread(new Runnable() {
 			
@@ -59,8 +64,8 @@ public class mqttMain implements MqttCallback{
 				}				
 			}
 		});
-    
-	subscribeThread.start();
+    return subscribeThread;
+	
 	
     }
     
@@ -83,13 +88,15 @@ public class mqttMain implements MqttCallback{
     public void cleanUp() {
 		 try {
 			 setsubscribeThreadLifeFlag(false);
-			 subscribeThread.join();
+			 Thread.sleep(1000);  
+
+			 //subscribeThread.join();
 			 client.disconnect();
 			 client.close();
 			 System.out.println("Mqqt cleanup");
 		 } catch (MqttException e) {
 			 e.printStackTrace();
-		 }catch (InterruptedException e) {
+		 } catch (InterruptedException e) {
 			 e.printStackTrace();
 		 }
 	}
@@ -97,6 +104,7 @@ public class mqttMain implements MqttCallback{
 	@Override
 	public void connectionLost(Throwable cause) {
 		 try {
+			 setsubscribeThreadLifeFlag(false);
 			 System.out.println("disconnected");
 			 client.close();
 		 } catch (MqttException e) {
@@ -109,18 +117,19 @@ public class mqttMain implements MqttCallback{
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		 
 		if (topic.equals("temperatureSensor")) {
-			System.out.println("recvMsgCallBack");
-
+			 
 			try {
 		        recvMsg = new String(message.getPayload());
 		       
 		        obj = parser.parse(recvMsg);
 		        jsonObj = (JSONObject) obj;
 		
-		        temperature = (Double) jsonObj.get("temperature");
-		        humidity = (Double) jsonObj.get("humidity");
+		        temperature = (double) jsonObj.get("temperature");
+		        humidity = (double) jsonObj.get("humidity");
 		        System.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
-		
+		        
+		        webSocketHandler.sendMsg(recvMsg);
+		        
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -6,7 +6,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	 
+	 asdasdasd
 	<header>
 	
 	</header>
@@ -18,56 +18,32 @@
 
 
 
-<script type=“text/javascript”>
+<script type="text/javascript">
 var mgttWebSocket = null;
  
-	mgttWebSocket = new SockJS("http://localhost:8080/websocket");
+mgttWebSocket = new SockJS("http://localhost:8000/websocket");
     
-    mgttWebSocket.onOpen = function(message) {
-        
-    };
+mgttWebSocket.onopen = function(message) {
+	console.log("connected");     
+};
     
 
-    mgttWebSocket.onMessage = function(message) {
-         message.data ;
-    };
+mgttWebSocket.onmessage = function(message) {
+     console.log("recv data=" + message.data) ;
+};
 
-    mgttWebSocket.onClose = function(message) {
-       
-    };
+mgttWebSocket.onclose = function(message) {
+     console.log("closed");       
+};
  
-    mgttWebSocket.onError = function(message) {
-         
-    };
+mgttWebSocket.onerror = function(message) {
+     console.log("error msg =" + message);     
+};
 
-function rebootButton_onclick() {
-    var inputMsgBox = document.getElementById(“inputMsgBox”);
-    if (inputMsgBox == null || inputMsgBox.value == null || inputMsgBox.value.length == 0) {
-        return false;
-    }
-    
-    var chatBoxArea = document.getElementById(“chatBoxArea”);
-    
-    if (mgttWebSocket == null || mgttWebSocket.readyState == 3) {
-        chatBoxArea.value += “Server is disconnected.\n”;
-        return false;
-    }
-    
-    // 서버로 메시지 전송
-    mgttWebSocket.send(inputMsgBox.value);
-    inputMsgBox.value = “”;
-    inputMsgBox.focus();
-    
-    return true;
-}
-
-/**
-* Disconnect 버튼 클릭하는 경우 호출
-*/
-function disconnectButton_onclick() {
-    if (mgttWebSocket != null) {
-        mgttWebSocket.close();    
-    }
+function rebootBtnClick() {
+  
+    mgttWebSocket.send("1");
+ 
 }
 
 </script>
