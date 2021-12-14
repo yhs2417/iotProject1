@@ -1,4 +1,4 @@
-package kr.hyunnn.iot001.mqtt;
+package kr.hyunnn.iot001.webSocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

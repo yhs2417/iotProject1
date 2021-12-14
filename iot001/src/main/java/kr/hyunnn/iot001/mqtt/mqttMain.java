@@ -1,52 +1,76 @@
 package kr.hyunnn.iot001.mqtt;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import kr.hyunnn.iot001.webSocket.WebSocketHandler;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 
 @Component
 public class mqttMain implements MqttCallback{
+	
 	private MqttClient client;
     private MqttConnectOptions option;
     private Thread subscribeThread;
     private boolean subscribeThreadLifeFlag = true;
 
+    MqttMessage message = new MqttMessage();
     private JSONParser parser = new JSONParser();
     private JSONObject jsonObj;
-    
     private String recvMsg;
 	private Object obj;
 	private double humidity;
 	private double temperature;
-   
-	@Autowired
+ 
 	private WebSocketHandler webSocketHandler;
+	private MqttRecordsService mqttRecordsService;
 	
+	
+	@Autowired
+	private mqttMain(WebSocketHandler webSocketHandler, MqttRecordsService mqttRecordsService) {
+		this.webSocketHandler = webSocketHandler;
+		this.mqttRecordsService = mqttRecordsService;
+	}
+	/* single 
+	private static mqttMain mqtt;
+
+	
+	public static mqttMain getInstance() {
+		if (mqtt == null) {
+			mqtt = new mqttMain(new WebSocketHandler(), mqttRecordsService);
+		}
+		return mqtt;
+	}
+
+	
+	public static void deleteInstance() {
+		mqtt = null;
+	}
+	*/
 	public void setsubscribeThreadLifeFlag(boolean lifeFlag) {
 		this.subscribeThreadLifeFlag = lifeFlag;
 	}
 	
-    public Thread init(String serverURI, String clientId, String topic) {
+    public void init(String serverURI, String clientId, String topic) {
 		  	
 		subscribeThread = new Thread(new Runnable() {
 			
 			@Override
 			public void run(){
 				try {
+					System.out.println("멀티스레드 진입");
 					option = new MqttConnectOptions();
 					option.setCleanSession(true);
 					// option.setKeepAliveInterval(30);
 					//option.setUserName(userName);
-					 
 					client = new MqttClient(serverURI, clientId);
 					client.setCallback(mqttMain.this);
 					client.connect(option);
@@ -64,14 +88,39 @@ public class mqttMain implements MqttCallback{
 				}				
 			}
 		});
-    return subscribeThread;
-	
-	
+	subscribeThread.start();	
+     
     }
-    
+
+	@Override
+	public void messageArrived(String topic, MqttMessage message) throws Exception {
+		 
+		if (topic.equals("temperatureSensor")) {
+			 
+			try {
+		        recvMsg = new String(message.getPayload());
+		       
+		        obj = parser.parse(recvMsg);
+		        jsonObj = (JSONObject) obj;
+		
+		        temperature = (double) jsonObj.get("temperature");
+		        humidity = (double) jsonObj.get("humidity");
+		        System.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
+		        
+		        //sendTo browser
+		        webSocketHandler.sendMsg(recvMsg);
+		        
+		        //db insert
+		        mqttRecordsService.insertMqqtDatas(humidity, temperature);
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
     public int sendMessage(String topic, String msg) {
 		try {
-	    	MqttMessage message = new MqttMessage();
+	    	
 			message.setPayload(msg.getBytes());   
 			client.publish(topic, message);   
 			 
@@ -89,8 +138,6 @@ public class mqttMain implements MqttCallback{
 		 try {
 			 setsubscribeThreadLifeFlag(false);
 			 Thread.sleep(1000);  
-
-			 //subscribeThread.join();
 			 client.disconnect();
 			 client.close();
 			 System.out.println("Mqqt cleanup");
@@ -113,28 +160,6 @@ public class mqttMain implements MqttCallback{
 		
 	}
 
-	@Override
-	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		 
-		if (topic.equals("temperatureSensor")) {
-			 
-			try {
-		        recvMsg = new String(message.getPayload());
-		       
-		        obj = parser.parse(recvMsg);
-		        jsonObj = (JSONObject) obj;
-		
-		        temperature = (double) jsonObj.get("temperature");
-		        humidity = (double) jsonObj.get("humidity");
-		        System.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
-		        
-		        webSocketHandler.sendMsg(recvMsg);
-		        
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token) {
