@@ -17,10 +17,10 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 @Component
 public class mqttMain implements MqttCallback{
 	
-	private MqttClient client;
+	private static MqttClient client;
     private MqttConnectOptions option;
-    private Thread subscribeThread;
-    private boolean subscribeThreadLifeFlag = true;
+    private static Thread subscribeThread;
+    private static boolean subscribeThreadLifeFlag = true;
 
     MqttMessage message = new MqttMessage();
     private JSONParser parser = new JSONParser();
@@ -32,31 +32,15 @@ public class mqttMain implements MqttCallback{
  
 	private WebSocketHandler webSocketHandler;
 	private MqttRecordsService mqttRecordsService;
-	
-	
+
 	@Autowired
 	private mqttMain(WebSocketHandler webSocketHandler, MqttRecordsService mqttRecordsService) {
 		this.webSocketHandler = webSocketHandler;
 		this.mqttRecordsService = mqttRecordsService;
 	}
-	/* single 
-	private static mqttMain mqtt;
-
 	
-	public static mqttMain getInstance() {
-		if (mqtt == null) {
-			mqtt = new mqttMain(new WebSocketHandler(), mqttRecordsService);
-		}
-		return mqtt;
-	}
-
-	
-	public static void deleteInstance() {
-		mqtt = null;
-	}
-	*/
-	public void setsubscribeThreadLifeFlag(boolean lifeFlag) {
-		this.subscribeThreadLifeFlag = lifeFlag;
+	public static void setsubscribeThreadLifeFlag(boolean lifeFlag) {
+		subscribeThreadLifeFlag = lifeFlag;
 	}
 	
     public void init(String serverURI, String clientId, String topic) {
@@ -89,7 +73,6 @@ public class mqttMain implements MqttCallback{
 			}
 		});
 	subscribeThread.start();	
-     
     }
 
 	@Override
@@ -134,16 +117,17 @@ public class mqttMain implements MqttCallback{
 		return 1;
 	}
     
-    public void cleanUp() {
+    public static void cleanUp() {
 		 try {
-			 setsubscribeThreadLifeFlag(false);
-			 Thread.sleep(1000);  
 			 client.disconnect();
 			 client.close();
+			 setsubscribeThreadLifeFlag(false);
+			 subscribeThread.join();
+	 
 			 System.out.println("Mqqt cleanup");
-		 } catch (MqttException e) {
-			 e.printStackTrace();
 		 } catch (InterruptedException e) {
+			 e.printStackTrace();
+		 } catch (MqttException e) {
 			 e.printStackTrace();
 		 }
 	}
@@ -163,7 +147,6 @@ public class mqttMain implements MqttCallback{
 
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token) {
-	 
-		
+	
 	}
 }

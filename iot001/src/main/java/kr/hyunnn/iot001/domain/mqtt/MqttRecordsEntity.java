@@ -17,7 +17,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class MqttRecordsEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long Id;
 	
 	@Column(columnDefinition = "Number", nullable=false)
@@ -36,6 +36,10 @@ public class MqttRecordsEntity {
 
 		this.humidity = humidity;
 		this.temperature = temperature;
+	}
+
+	public MqttRecordsEntity() {
+		 
 	}
 
 	public Long getId() {

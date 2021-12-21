@@ -16,8 +16,10 @@ public class MqttRecordsService {
 	IMqttRecordsRepository iMqttRecordsRepository;
 	 
 	MqttRecordsEntity mqttRecordsEntity;
-	
+	MqttRecordsResponseVO mqttRecordsResponseVO;
 	private int insertCount;
+	List<Object> responseList;
+	List<Object> rowDataList;
 	
 	@Autowired
 	public MqttRecordsService(IMqttRecordsRepository iMqttRecordsRepository) {
@@ -31,11 +33,32 @@ public class MqttRecordsService {
 		iMqttRecordsRepository.save(mqttRecordsEntity);
 	}
 	
-	public List<MqttRecordsResponseVO> selectAllMqqtDatas() {
-		List<MqttRecordsResponseVO> res = new ArrayList<>();
-		for (MqttRecordsEntity i : iMqttRecordsRepository.findAll()) {
-			res.add(new MqttRecordsResponseVO(i));
+	public List<Object> selectAllMqqtDatas() {
+		responseList = new ArrayList<>();
+		rowDataList = new ArrayList<>();
+		
+		rowDataList.add("時間");
+		rowDataList.add("湿度");
+		rowDataList.add("温度");
+
+		responseList.add(rowDataList) ;
+		
+		if (iMqttRecordsRepository.count() != 0 ) {
+
+			for (MqttRecordsEntity i : iMqttRecordsRepository.findAll()) {
+				//mqttRecordsResponseVO.setInsertTime(i.getUpdateTime());
+				//mqttRecordsResponseVO.setHumidity(i.getHumidity());
+				//mqttRecordsResponseVO.setTemperature(i.getTemperature());
+				//responseList.add(mqttRecordsResponseVO);
+				rowDataList = new ArrayList<>();
+				rowDataList.add(i.getInsertTime());
+				rowDataList.add(i.getHumidity());
+				rowDataList.add(i.getTemperature());
+				
+				responseList.add(rowDataList);
+				 
+			}
 		}
-		return res;
+		return responseList;
 	}
 }

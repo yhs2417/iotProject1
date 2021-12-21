@@ -9,7 +9,11 @@ public class MqttRecordsResponseVO {
 	private double humidity;
 	private double temperature; 
 	private LocalDate insertTime;
-		
+	
+	public MqttRecordsResponseVO() {
+			 
+	}
+	
 	public MqttRecordsResponseVO(MqttRecordsEntity mqttRecordsEntity) {
 		 this.humidity = mqttRecordsEntity.getHumidity();
 		 this.temperature = mqttRecordsEntity.getTemperature();
