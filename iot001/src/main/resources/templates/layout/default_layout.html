@@ -16,20 +16,20 @@
 <body>
 	<header>
         <h1>
-            <a></a>
+            <a th:href="@{/}"></a>
             <button class="menuBtn"></button>
         </h1>                 
         <nav>
             <ul class="top">
 			 	<li>
-			 	  <a class="rebootBtn">
+			 	  <a class="rebootBtn" onclick="alert('すみません. 準備中でございます')">
 				    <span>電原</span>
 				  </a>
 				</li>
             </ul>
             <ul class="gnb">
-              <li><a><span>グラフ</span></a></li>
-              <li><a><span>スキル</span></a></li> 
+              <li><a onclick="alert('すみません. 準備中でございます')"><span>会員情報</span></a></li>
+              <li><a th:href="@{/skills}"><span>スキル</span></a></li> 
             </ul>
         </nav>
     </header>
@@ -51,33 +51,7 @@
     $("header nav").hide(200);
      $(".dim").hide();
     });
- 
- var mgttWebSocket = null;
- 
- mgttWebSocket = new SockJS("http://localhost:8000/websocket");
- if (mgttWebSocket != null) {
-	 mgttWebSocket.onopen = function(message) {
-	 	console.log("connected");     
-	 };
-	     
-	
-	 mgttWebSocket.onmessage = function(message) {
-	      console.log("recv data=" + message.data) ;
-	 };
-	
-	 mgttWebSocket.onclose = function(message) {
-	      console.log("closed");       
-	 };
-	  
-	 mgttWebSocket.onerror = function(message) {
-	      console.log("error msg =" + message);     
-	 };
- }
- function rebootBtnClick() {
-   
-     mgttWebSocket.send("1");
-  
- }
+
 </script>
 </body>
 </html>

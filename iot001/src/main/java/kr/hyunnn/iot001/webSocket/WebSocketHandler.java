@@ -10,12 +10,21 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import kr.hyunnn.iot001.mqtt.MqttRecordsService;
+
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
 
 	private static List<WebSocketSession> webSessions = new ArrayList<>();
+	private MqttRecordsService mqttRecordsService;
 	
-    @Override
+	@Autowired
+    public WebSocketHandler(MqttRecordsService mqttRecordsService) {
+		super();
+		this.mqttRecordsService = mqttRecordsService;
+	}
+
+	@Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
     	System.out.println("ws connected");
     
@@ -26,6 +35,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String payload = message.getPayload();
     	System.out.println("ws msg=" + payload);
+    	
+    	if (payload.trim().substring(0, 0).equals("D")) {
+    		 
+    		String[] dates = payload.replace("D", "").split("&");
+    		
+    		//mqttRecordsService.selectMqqtDatasByDate(dates);
+    	}
       
     }   
 	public void sendMsg(String msg) throws Exception {
