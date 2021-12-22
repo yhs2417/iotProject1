@@ -1,0 +1,23 @@
+.graph_header {
+	margin-top : 5rem ;
+	padding : 0 2rem; overflow:hidden;
+}
+.graph_header h1 {
+	font-size:1.3rem;
+}
+.graph_header p {
+	margin-top :2rem ; text-align:center ; line-height : 2rem ; 
+}
+.graph_header p input {
+	line-height : inherit ; margin : 0 0.5rem 0 0.2rem ; 
+	padding-left :0.5rem ; box-sizing : border-box; 
+}
+.graph_header p span:nth-of-type(2) {
+	margin-left: 1rem;
+}
+.graph_header #graph_request_btn {
+	float:right; padding :0.3rem 0.8rem; margin-top : 1rem; margin-right: 0;
+}
+#graph_area {
+	margin-top : 3rem; padding: 0 2rem;
+}

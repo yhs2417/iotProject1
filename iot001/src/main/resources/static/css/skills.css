@@ -1,0 +1,10 @@
+.skills_content {
+	margin-top : 5rem ;
+	padding : 0 2rem;  
+}
+.skills_content h1 {
+	font-size:1.3rem;
+}
+.skills_content p {
+	margin-top :2rem ; text-align:center ; line-height : 2rem ; 
+}

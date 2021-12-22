@@ -1,75 +1,101 @@
 <!DOCTYPE html>
-<html lang="" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+<html lang="" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/default_layout}"
-	xmlns="http://www.w3.org/1999/xhtml"> 
+	xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<th:block layout:fragment="head_content">
-    	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<th:block layout:fragment="head_content">
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/graph.css}">
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	</th:block>
+</th:block>
 </head>
 <body>
-  	<th:block layout:fragment="main_content">
-	    <p>조회기간을  
-	        <input type="text" id="datepicker1">
-	        <input type="text" id="datepicker2">
-	    </p>
-	    <div id="grpah_area" style="width: 600px; height: 500px">
+	<th:block layout:fragment="main_content">
+		<div class="mqtt_data">
+			<h1>リアルタイムのデータ</h1>
+			<div class="mqtt_data_inner">
+				<ul class="humidity">
+					<li>湿度</li> 
+					<li>30</li> 
+				</ul>
+				
+				<ul class="temperature">
+					<li>温度</li>
+					<li>50</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="graph_header">
+	    	<h1>温度と湿度のグラフ</h1>
+	    	<p>  
+	        	<span>開始</span>
+	        	<input type="text" id="datepicker1">
+	        	<span>終了</span>
+	        	<input type="text" id="datepicker2">
+	    	</p>
+	    	 
+	    	<button id="graph_request_btn">照会</button>
+	    </div>
+	    
+	    <div id="graph_area">
 	    </div>      
-  	
-  	</th:block>
-  
+
+	</th:block>
+
 
 
 	<th:block layout:fragment="js_content">
-    <script th:inline="javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-    
-      /*<![CDATA[*/ 
-      graphDatas = /*[[ ${graphDatas} ]]*/; 
-      /*]]*/
+		<script th:inline="javascript">
+ 	      google.charts.load('current', {'packages':['corechart']});
+	      google.charts.setOnLoadCallback(drawChart);
+	    
+	      /*<![CDATA[*/ 
+	      graphDatas = /*[[ ${graphDatas} ]]*/
+	      /*]]*/
 
-   
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(graphDatas);
-　　//[x축, y축1, y축2]
-        
-       var options = {
-          title: '温度と湿度',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+	   
+	      function drawChart() {
+	        var data = google.visualization.arrayToDataTable(graphDatas);
+	　　//[x축, y축1, y축2]
+	        
+	       var options = {
+	          title: '温度と湿度',
+	          curveType: 'function',
+	          legend: { position: 'bottom' }
+	        };
 
-        var chart = new google.visualization.LineChart(document.getElementById('grpah_area'));
+	        var chart = new google.visualization.LineChart(document.getElementById('graph_area'));
 
-        chart.draw(data, options);
-      }
-   
-  $('#datepicker1, #datepicker2').datepicker({
- dateFormat: 'yy-mm-dd'  
-           ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-           ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
-           ,changeYear: true //option값 년 선택 가능
-           ,changeMonth: true //option값  월 선택 가능                
-           ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-           ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
-           ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-           ,buttonText: "日時" //버튼 호버 텍스트              
-           ,yearSuffix: "年" //달력의 년도 부분 뒤 텍스트
-           ,monthNamesShort: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] //달력의 월 부분 텍스트
-           ,monthNames: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] //달력의 월 부분 Tooltip
-           ,dayNamesMin: ['日','月','火','水','木','金','土'] //달력의 요일 텍스트
-           ,dayNames:  ['日','月','火','水','木','金','土'] //달력의 요일 Tooltip
-           ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-           ,maxDate: "0" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-});
+	        chart.draw(data, options);
+	      }
+	   
+	  $('#datepicker1, #datepicker2').datepicker({
+	 dateFormat: 'yy-mm-dd'  
+	           ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+	           ,showMonthAfterYear:true // 월- 년 순서가아닌 년도 - 월 순서
+	           ,changeYear: true //option값 년 선택 가능
+	           ,changeMonth: true //option값  월 선택 가능                
+	           ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+	           ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+	           ,buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+	           ,buttonText: "日時" //버튼 호버 텍스트              
+	           ,yearSuffix: "年" //달력의 년도 부분 뒤 텍스트
+	           ,monthNamesShort: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] //달력의 월 부분 텍스트
+	           ,monthNames: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] //달력의 월 부분 Tooltip
+	           ,dayNamesMin: ['日','月','火','水','木','金','土'] //달력의 요일 텍스트
+	           ,dayNames:  ['日','月','火','水','木','金','土'] //달력의 요일 Tooltip
+	           ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+	           ,maxDate: "0" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+	});
 
-$('#datepicker1, #datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)   
-  
-	</script>
-</th:block>
+	$('#datepicker1, #datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)   
+	  
+		</script>
+	</th:block>
 </body>
 
 </html>

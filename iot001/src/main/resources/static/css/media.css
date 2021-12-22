@@ -1,6 +1,6 @@
-@media(min-width:24rem) {
+@media(min-width:48rem) {
 
   header nav {
-    position : fixed; ; width: 12rem ; top : 0 ; bottom:0 ; overflow : hidden ; z-index : 101 ; background-color : white;
+    position : fixed; ; width: 20rem ; top : 0 ; bottom:0 ; overflow : hidden ; z-index : 101 ; background-color : white;
   }
 }

@@ -1,0 +1,31 @@
+.mqtt_data {
+	margin-top :3rem ; padding : 0 2rem;
+}
+.mqtt_data h1 {
+	font-size : 1.3rem;
+}
+.mqtt_data_inner {
+	margin-top : 3rem; text-align : center ; font-size : 0;
+}
+.humidity, .temperature {
+	display : inline-block;
+}
+.temperature {
+	margin-left : 4rem;
+}
+.humidity li, .temperature li {
+	font-size : 1rem;
+}
+.humidity li:nth-of-type(2), .temperature li:nth-of-type(2){
+	line-height : 3;
+	font-size: 3rem;
+	margin-top :0.5rem;
+	padding : 0 3rem; 
+	border-radius : 50%;
+} 
+.humidity li:nth-of-type(2) {
+	border : 1px solid red;	
+}
+.temperature li:nth-of-type(2){
+	border : 1px solid blue;	
+}
