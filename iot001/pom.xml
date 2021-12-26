@@ -128,7 +128,7 @@
            	 	<filtering>true</filtering>
        		</resource>
         	<resource>   
-            	<directory>../../../../resources-${deploy.phase}/</directory>
+            	<directory>../../../resources-${deploy.phase}/</directory>
             	<filtering>true</filtering>
         	</resource>
     	</resources>
