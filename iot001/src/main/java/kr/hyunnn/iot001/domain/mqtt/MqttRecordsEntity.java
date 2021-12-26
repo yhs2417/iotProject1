@@ -17,7 +17,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class MqttRecordsEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long Id;
 	
 	@Column(columnDefinition = "Number", nullable=false)

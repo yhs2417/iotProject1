@@ -13,8 +13,6 @@ public class Iot001Application {
 		try {
 			ConfigurableApplicationContext appContext = SpringApplication.run(Iot001Application.class, args);
 			mqttMain mqtt = appContext.getBean(mqttMain.class);
- 
-		
 			//("mqqtServer IP, ClientId, subscribeTopic")
 			mqtt.init("tcp://192.168.219.161:1883", "102030HClient", "temperatureSensor");
 		} catch (Exception e) {
