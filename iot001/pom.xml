@@ -87,6 +87,26 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+    	<profile>
+        	<id>local</id>   
+        	<properties>
+            	<maven.test.skip>false</maven.test.skip>
+ 				<deploy.phase>local</deploy.phase>
+       		</properties>    
+        	<activation> 
+            	<activeByDefault>true</activeByDefault>
+        	</activation>
+   	   </profile>
+       <profile>
+       		<id>iot</id>
+       		<properties>
+            	<maven.test.skip>false</maven.test.skip>
+           		<deploy.phase>iot</deploy.phase>
+       		</properties>
+   	   </profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -102,6 +122,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<resources>
+        	<resource>  
+            	<directory>src/main/resources</directory>
+           	 	<filtering>true</filtering>
+       		</resource>
+        	<resource>   
+            	<directory>../../../../resources-${deploy.phase}/</directory>
+            	<filtering>true</filtering>
+        	</resource>
+    	</resources>
 	</build>
 
 </project>
