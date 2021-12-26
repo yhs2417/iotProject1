@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>kr.hyunnn</groupId>
 	<artifactId>iot001</artifactId>
-	<version>1.0.1</version>
+	<version>1</version>
 	<packaging>war</packaging>
 	<name>iot001</name>
 	<description>Demo project for Spring Boot</description>
@@ -101,7 +101,7 @@
        <profile>
        		<id>iot</id>
        		<properties>
-            	<maven.test.skip>false</maven.test.skip>
+            	<maven.test.skip>true</maven.test.skip>
            		<deploy.phase>iot</deploy.phase>
        		</properties>
    	   </profile>
