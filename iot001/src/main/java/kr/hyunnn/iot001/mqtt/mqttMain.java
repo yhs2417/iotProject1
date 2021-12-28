@@ -71,7 +71,7 @@ public class mqttMain implements MqttCallback{
 				} catch (MqttException e) {
 					 throw new RuntimeException(e);
 				} catch (InterruptedException e) {
-				 
+					logger.error(e);  	
 					e.printStackTrace();
 				}				
 			}
@@ -101,7 +101,7 @@ public class mqttMain implements MqttCallback{
 		        mqttRecordsService.insertMqqtDatas(humidity, temperature);
 			
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e);
 				 
 			}
 		}
@@ -113,10 +113,7 @@ public class mqttMain implements MqttCallback{
 			client.publish(topic, message);   
 			 
 		} catch (MqttException e) {
-		    
-            System.out.println("msg "+e.getMessage());
-           
-    		e.printStackTrace();
+			logger.error(e);
     		return 0;
 		}
 		return 1;
@@ -144,7 +141,7 @@ public class mqttMain implements MqttCallback{
 			 logger.info("mqtt connectionLost");
 			 client.close();
 		 } catch (MqttException e) {
-			 e.printStackTrace();
+			 logger.error(e);
 		 }
 		
 	}
