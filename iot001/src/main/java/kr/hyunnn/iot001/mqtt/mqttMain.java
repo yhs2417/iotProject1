@@ -2,7 +2,6 @@ package kr.hyunnn.iot001.mqtt;
 
  
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -17,10 +16,10 @@ import org.springframework.stereotype.Component;
 import kr.hyunnn.iot001.webSocket.WebSocketHandler;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
-
+import org.slf4j.Logger;
 @Component
 public class mqttMain implements MqttCallback{
-	private final Logger logger = LogManager.getLogger(mqttMain.class);
+	private final  Logger logger = LoggerFactory.getLogger(mqttMain.class);
 	private static MqttClient client;
     private MqttConnectOptions option;
     private static Thread subscribeThread;
@@ -71,7 +70,7 @@ public class mqttMain implements MqttCallback{
 				} catch (MqttException e) {
 					 throw new RuntimeException(e);
 				} catch (InterruptedException e) {
-					logger.error(e);  	
+					logger.error("", e);  	
 					e.printStackTrace();
 				}				
 			}
@@ -101,7 +100,7 @@ public class mqttMain implements MqttCallback{
 		        mqttRecordsService.insertMqqtDatas(humidity, temperature);
 			
 			} catch (Exception e) {
-				logger.error(e);
+				logger.error("", e);  	
 				 
 			}
 		}
@@ -113,7 +112,7 @@ public class mqttMain implements MqttCallback{
 			client.publish(topic, message);   
 			 
 		} catch (MqttException e) {
-			logger.error(e);
+			logger.error("", e);  	
     		return 0;
 		}
 		return 1;
@@ -141,7 +140,7 @@ public class mqttMain implements MqttCallback{
 			 logger.info("mqtt connectionLost");
 			 client.close();
 		 } catch (MqttException e) {
-			 logger.error(e);
+				logger.error("", e);  	
 		 }
 		
 	}
