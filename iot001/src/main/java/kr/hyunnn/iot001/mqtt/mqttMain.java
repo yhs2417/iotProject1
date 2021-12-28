@@ -1,7 +1,7 @@
 package kr.hyunnn.iot001.mqtt;
 
  
-import org.apache.logging.log4j.LogManager;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;

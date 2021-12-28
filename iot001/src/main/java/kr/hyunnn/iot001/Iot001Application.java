@@ -14,11 +14,13 @@ public class Iot001Application {
 	public static void main(String[] args) {
 		try {
  			ConfigurableApplicationContext appContext = SpringApplication.run(Iot001Application.class, args);
-			mqttMain mqtt = appContext.getBean(mqttMain.class);
+			System.out.println("----1---");
+ 			mqttMain mqtt = appContext.getBean(mqttMain.class);
+ 			System.out.println("----2---");
 			//("mqqtServer IP, ClientId, subscribeTopic")
 			mqtt.init("tcp://3.13.219.168:1883", "102030HClient", "temperatureSensor");
 		} catch (Exception e) {
-		 
+			e.printStackTrace();
  		}
 
 	}
