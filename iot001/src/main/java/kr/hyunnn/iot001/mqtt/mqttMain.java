@@ -1,5 +1,8 @@
 package kr.hyunnn.iot001.mqtt;
 
+ 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -7,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +20,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 
 @Component
 public class mqttMain implements MqttCallback{
-	
+	private final Logger logger = LogManager.getLogger(mqttMain.class);
 	private static MqttClient client;
     private MqttConnectOptions option;
     private static Thread subscribeThread;
@@ -50,7 +54,7 @@ public class mqttMain implements MqttCallback{
 			@Override
 			public void run(){
 				try {
-					System.out.println("멀티스레드 진입");
+					logger.info("mqtt sub 멀티스레드 진입");
 					option = new MqttConnectOptions();
 					option.setCleanSession(true);
 					// option.setKeepAliveInterval(30);
@@ -77,7 +81,7 @@ public class mqttMain implements MqttCallback{
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		 
+		
 		if (topic.equals("temperatureSensor")) {
 			 
 			try {
@@ -88,8 +92,8 @@ public class mqttMain implements MqttCallback{
 		
 		        temperature = (double) jsonObj.get("temperature");
 		        humidity = (double) jsonObj.get("humidity");
-		        System.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
-		        
+		        //ystem.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
+		        logger.info("mqtt msg 도착 온도=" + temperature);
 		        //sendTo browser
 		        webSocketHandler.sendMsg(recvMsg);
 		        
@@ -98,6 +102,7 @@ public class mqttMain implements MqttCallback{
 			
 			} catch (Exception e) {
 				e.printStackTrace();
+				 
 			}
 		}
 	}
@@ -123,8 +128,8 @@ public class mqttMain implements MqttCallback{
 			 client.close();
 			 setsubscribeThreadLifeFlag(false);
 			 subscribeThread.join();
-	 
-			 System.out.println("Mqqt cleanup");
+
+			 //System.out.println("Mqqt cleanup");
 		 } catch (InterruptedException e) {
 			 e.printStackTrace();
 		 } catch (MqttException e) {
@@ -136,7 +141,7 @@ public class mqttMain implements MqttCallback{
 	public void connectionLost(Throwable cause) {
 		 try {
 			 setsubscribeThreadLifeFlag(false);
-			 System.out.println("disconnected");
+			 logger.info("mqtt connectionLost");
 			 client.close();
 		 } catch (MqttException e) {
 			 e.printStackTrace();
