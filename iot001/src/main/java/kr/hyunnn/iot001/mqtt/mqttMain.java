@@ -48,7 +48,7 @@ public class mqttMain implements MqttCallback{
 	}
 	
     public void init(String serverURI, String clientId, String topic) {
-		  	
+    	logger.info("mqtt sub 멀티스레드 진입");  	
 		subscribeThread = new Thread(new Runnable() {
 			
 			@Override
