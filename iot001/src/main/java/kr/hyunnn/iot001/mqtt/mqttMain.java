@@ -68,6 +68,7 @@ public class mqttMain implements MqttCallback{
 						
 					}
 				} catch (MqttException e) {
+					 logger.error("", e);
 					 throw new RuntimeException(e);
 				} catch (InterruptedException e) {
 					logger.error("", e);  	
