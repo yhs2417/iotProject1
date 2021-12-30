@@ -21,7 +21,9 @@ public class Iot001Application {
  			main_logger.info("-------2222------");
 
 			//("mqqtServer IP, ClientId, subscribeTopic")
-			mqtt.init("tcp://3.13.219.168:1883", "102030HClient", "temperatureSensor");
+//			mqtt.init("tcp://3.13.219.168:1883", "102030HClient", "temperatureSensor");
+			mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
+
 		} catch (Exception e) {
 			main_logger.error("",e);
  		}
