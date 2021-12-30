@@ -26,6 +26,7 @@ public class Iot001Application {
 
 		} catch (Exception e) {
 			main_logger.error("",e);
+			e.printStackTrace();
  		}
 
 	}
