@@ -125,9 +125,10 @@ public class mqttMain implements MqttCallback{
 				 client.disconnect();
 				 client.close();
 			 }
-			 setsubscribeThreadLifeFlag(false);
-			 subscribeThread.join();
-
+			 if (subscribeThread != null) {
+				 setsubscribeThreadLifeFlag(false);
+				 subscribeThread.join();
+			 }
 			 //System.out.println("Mqqt cleanup");
 		 } catch (InterruptedException e) {
 			 e.printStackTrace();
