@@ -19,11 +19,11 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.slf4j.Logger;
 @Component
 public class mqttMain implements MqttCallback{
-	private final  Logger logger = LoggerFactory.getLogger(mqttMain.class);
-	private static MqttClient client;
+	private Logger logger = LoggerFactory.getLogger(mqttMain.class);
+	private MqttClient client;
     private MqttConnectOptions option;
-    private static Thread subscribeThread;
-    private static boolean subscribeThreadLifeFlag = true;
+    private Thread subscribeThread;
+    private  boolean subscribeThreadLifeFlag = true;
 
     MqttMessage message = new MqttMessage();
     private JSONParser parser = new JSONParser();
@@ -42,7 +42,7 @@ public class mqttMain implements MqttCallback{
 		this.mqttRecordsService = mqttRecordsService;
 	}
 	
-	public static void setsubscribeThreadLifeFlag(boolean lifeFlag) {
+	public void setsubscribeThreadLifeFlag(boolean lifeFlag) {
 		subscribeThreadLifeFlag = lifeFlag;
 	}
 	
@@ -119,7 +119,7 @@ public class mqttMain implements MqttCallback{
 		return 1;
 	}
     
-    public static void cleanUp() {
+    public void cleanUp() {
 		 try {
 			 if (subscribeThread != null) {
 				 setsubscribeThreadLifeFlag(false);
