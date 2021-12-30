@@ -121,10 +121,6 @@ public class mqttMain implements MqttCallback{
     
     public static void cleanUp() {
 		 try {
-			 if (client != null) {
-				 client.disconnect();
-				 client.close();
-			 }
 			 if (subscribeThread != null) {
 				 setsubscribeThreadLifeFlag(false);
 				 subscribeThread.join();
@@ -132,9 +128,7 @@ public class mqttMain implements MqttCallback{
 			 //System.out.println("Mqqt cleanup");
 		 } catch (InterruptedException e) {
 			 e.printStackTrace();
-		 } catch (MqttException e) {
-			 e.printStackTrace();
-		 }
+		 } 
 	}
     
 	@Override
