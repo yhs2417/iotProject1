@@ -16,7 +16,7 @@ public class Iot001Application {
 	public static void main(String[] args) {
 		try {
  			ConfigurableApplicationContext appContext = SpringApplication.run(Iot001Application.class, args);
- 			logger.info("-------111------");
+ 			 
  			mqttMain mqtt = appContext.getBean(mqttMain.class);
  			logger.info("-------2222------");
 
