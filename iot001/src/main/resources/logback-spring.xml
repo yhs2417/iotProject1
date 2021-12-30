@@ -5,15 +5,17 @@
 	<property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss}|||[%p][%F:%L]%m%n"/>
 	 
     <appender name="Console_Appender" class="ch.qos.logback.core.ConsoleAppender">
-         <layout class="ch.qos.logback.classic.PatternLayout">
+         <encoder>
+         	<charset>UTF-8</charset>
          	<Pattern>${pattern}</Pattern>
-         </layout>
+         </encoder>
      </appender>
      <appender name="File_Appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${path}/app.log</file> 
- 		<layout>
+ 		<encoder>
+ 			<charset>UTF-8</charset>
             <pattern>${pattern}</pattern>
-        </layout>
+        </encoder>
  		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
 		    <fileNamePattern>${path}/app.log_%d{yyyy-MM-dd}.log.gz</fileNamePattern>
 	             
