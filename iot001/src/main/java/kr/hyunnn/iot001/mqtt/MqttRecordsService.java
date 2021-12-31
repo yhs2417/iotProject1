@@ -19,7 +19,7 @@ public class MqttRecordsService {
 	 
 	MqttRecordsEntity mqttRecordsEntity;
 	MqttRecordsResponseVO mqttRecordsResponseVO;
-	private int insertCount;
+	private int insertCount = 0;
 	List<Object> responseList;
 	List<Object> rowDataList;
 	
@@ -30,14 +30,15 @@ public class MqttRecordsService {
 	
 	public void insertMqqtDatas(double humidity, double temperature) {
 		
-		//insertCount++;
-		
-		//if (insertCount == 86400) {
-		mqttRecordsEntity = new MqttRecordsEntity(humidity, temperature);
+		insertCount = insertCount + 4;
+		if (insertCount == 20) {
+
+		//if (insertCount == 43200) {
+			mqttRecordsEntity = new MqttRecordsEntity(humidity, temperature);
 	     
-		iMqttRecordsRepository.save(mqttRecordsEntity);
-		//insertCount = 0;
-		//}
+			iMqttRecordsRepository.save(mqttRecordsEntity);
+			insertCount = 0;
+		}
 	}
 	
 	public List<Object> selectAllMqqtDatas() {

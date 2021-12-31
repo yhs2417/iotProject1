@@ -25,7 +25,7 @@ public class MqttRecordsController {
 	@GetMapping("/")
 	public ModelAndView indexPage()
 	{
-		mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
+		//mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index.html");
 		mav.addObject("graphDatas", mqttRecordsService.selectAllMqqtDatas());
