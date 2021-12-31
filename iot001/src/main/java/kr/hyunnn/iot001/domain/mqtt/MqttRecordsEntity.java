@@ -15,11 +15,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="Records")
-@SequenceGenerator(sequenceName = "MQQT_SEQ", name = "GEN_SEQ")
 public class MqttRecordsEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GEN_SEQ")
+	@SequenceGenerator(sequenceName="MQQT_SEQ", name="GEN_SEQ")
 	private Long Id;
 	
 	@Column(columnDefinition = "Number", nullable=false)
