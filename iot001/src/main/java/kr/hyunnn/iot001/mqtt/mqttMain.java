@@ -93,7 +93,7 @@ public class mqttMain implements MqttCallback{
 		        temperature = (double) jsonObj.get("temperature");
 		        humidity = (double) jsonObj.get("humidity");
 		        //ystem.out.println("topic=" + topic + "temp" + temperature + "hum" + humidity);
-		        logger.info("mqtt msg 도착 온도=" + temperature);
+		        //logger.info("mqtt msg 도착 온도=" + temperature);
 		        //sendTo browser
 		        webSocketHandler.sendMsg(recvMsg);
 		        

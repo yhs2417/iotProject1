@@ -30,10 +30,10 @@ public class MqttRecordsService {
 	
 	public void insertMqqtDatas(double humidity, double temperature) {
 		
-		insertCount = insertCount + 4;
-		if (insertCount == 20) {
+		insertCount = insertCount + 5;
+		//if (insertCount == 20) {
 
-		//if (insertCount == 43200) {
+		if (insertCount == 43200) { //12hour
 			mqttRecordsEntity = new MqttRecordsEntity(humidity, temperature);
 	     
 			iMqttRecordsRepository.save(mqttRecordsEntity);

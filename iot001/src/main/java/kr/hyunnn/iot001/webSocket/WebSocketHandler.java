@@ -56,7 +56,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			session.sendMessage(new TextMessage(msg));
 		}
 		//System.out.println("in sendmsg");
-		logger.info("websocket sendmsg");
+		//logger.info("websocket sendmsg");
 	}
 
     @Override
