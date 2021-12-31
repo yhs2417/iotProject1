@@ -14,17 +14,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class MqttRecordsController {
 
 	private MqttRecordsService mqttRecordsService;
-	
+	private mqttMain mqtt;
 	
 	@Autowired
-	public MqttRecordsController(MqttRecordsService mqttRecordsService) {
+	public MqttRecordsController(MqttRecordsService mqttRecordsService, mqttMain mqtt) {
 		 
 		this.mqttRecordsService = mqttRecordsService;
+		this.mqtt = mqtt;
 	}
-	
 	@GetMapping("/")
 	public ModelAndView indexPage()
 	{
+		mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index.html");
 		mav.addObject("graphDatas", mqttRecordsService.selectAllMqqtDatas());
