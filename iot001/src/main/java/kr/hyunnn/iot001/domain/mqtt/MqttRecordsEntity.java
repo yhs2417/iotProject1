@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,7 +18,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class MqttRecordsEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MQQT_SEQ")
+    @SequenceGenerator(sequenceName = "MQQT_SEQ", allocationSize = 1, name = "MQQT_SEQ")
 	private Long Id;
 	
 	@Column(columnDefinition = "Number", nullable=false)
