@@ -24,7 +24,8 @@ public class mqttMain implements MqttCallback{
     private MqttConnectOptions option;
     private Thread subscribeThread;
     private  boolean subscribeThreadLifeFlag = true;
-
+    private  boolean subscribeThreadWorkingFlag = false;
+    
     MqttMessage message = new MqttMessage();
     private JSONParser parser = new JSONParser();
     private JSONObject jsonObj;
@@ -65,7 +66,11 @@ public class mqttMain implements MqttCallback{
 					client.subscribe(topic);
 					
 					while(subscribeThreadLifeFlag == true) {
-						
+						if (subscribeThreadWorkingFlag == true) {
+							logger.info("WorkingFlag ON");
+						} else {
+							Thread.yield();
+						}
 					}
 					logger.info("mqtt 멀티스레드 종료");
 
@@ -76,14 +81,17 @@ public class mqttMain implements MqttCallback{
 					logger.error("", e);  	
 				 
 				}				
-			}//run()
-		});//subscribeThread
+			}  //run()
+		}, "MqttMainTread");//subscribeThread
 	subscribeThread.start();	
     }
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		
+		logger.info("Mqtt 메세지 도착");
+		subscribeThreadWorkingFlag = true;
+
+		//Yield()로 실행 대기에 있다가 메세지 도착 이벤트를 잡을수 있을까?
 		if (topic.equals("temperatureSensor")) {
 			 
 			try {
@@ -107,6 +115,8 @@ public class mqttMain implements MqttCallback{
 				 
 			}
 		}
+		subscribeThreadWorkingFlag = false;
+
 	}
     public int sendMessage(String topic, String msg) {
 		try {
@@ -127,30 +137,27 @@ public class mqttMain implements MqttCallback{
 				 setsubscribeThreadLifeFlag(false);
 				 subscribeThread.join();
 			 }
-			 //System.out.println("Mqqt cleanup");
-		 } catch (InterruptedException e) {
+ 		 } catch (InterruptedException e) {
 			 logger.error("", e);  
 
 		 } 
 	}
-    
 	@Override
 	public void connectionLost(Throwable cause) {
 		 try {
 			 logger.info("mqtt connectionLost");
-			 setsubscribeThreadLifeFlag(false);
-			 subscribeThread.join();
+			 if (subscribeThread != null) {
+				 setsubscribeThreadLifeFlag(false);
+			 	subscribeThread.join();
+			 }
 			 client.close();
 		 } catch (MqttException e) {
 				logger.error("", e);  	
 		 } catch (InterruptedException e) {
-			 
 			 logger.error("", e);  
 		 } 
 		
 	}
-
-
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token) {
 	
