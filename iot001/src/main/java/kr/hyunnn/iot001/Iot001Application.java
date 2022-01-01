@@ -11,22 +11,18 @@ import kr.hyunnn.iot001.mqtt.mqttMain;
 @SpringBootApplication
 public class Iot001Application {
  
-	private static Logger logger = LoggerFactory.getLogger(Iot001Application.class);
-
 	public static void main(String[] args) {
 		try {
- 			ConfigurableApplicationContext appContext = SpringApplication.run(Iot001Application.class, args);
+ 			SpringApplication.run(Iot001Application.class, args);
  			 
  			//mqttMain mqtt = appContext.getBean(mqttMain.class);
- 			logger.info("-------2222------");
-
+ 
 			//("mqqtServer IP, ClientId, subscribeTopic")
 //			mqtt.init("tcp://3.13.219.168:1883", "102030HClient", "temperatureSensor");
 			//mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
 
 		} catch (Exception e) {
-			logger.error("",e);
-			e.printStackTrace();
+ 			e.printStackTrace();
  		}
 
 	}

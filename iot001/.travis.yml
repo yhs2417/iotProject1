@@ -6,7 +6,6 @@ branches:
   only:
     - master
 
-# Travis CI 서버의 $Home(어느 폴더지?travis 상의 폴더인가)
 cache:
   directories:
     - '$HOME/.m2/repository'

@@ -67,15 +67,17 @@ public class mqttMain implements MqttCallback{
 					while(subscribeThreadLifeFlag == true) {
 						
 					}
+					logger.info("mqtt 멀티스레드 종료");
+
 				} catch (MqttException e) {
 					 logger.error("", e);
 					 throw new RuntimeException(e);
 				} catch (InterruptedException e) {
 					logger.error("", e);  	
-					e.printStackTrace();
+				 
 				}				
-			}
-		});
+			}//run()
+		});//subscribeThread
 	subscribeThread.start();	
     }
 
@@ -127,19 +129,24 @@ public class mqttMain implements MqttCallback{
 			 }
 			 //System.out.println("Mqqt cleanup");
 		 } catch (InterruptedException e) {
-			 e.printStackTrace();
+			 logger.error("", e);  
+
 		 } 
 	}
     
 	@Override
 	public void connectionLost(Throwable cause) {
 		 try {
-			 setsubscribeThreadLifeFlag(false);
 			 logger.info("mqtt connectionLost");
+			 setsubscribeThreadLifeFlag(false);
+			 subscribeThread.join();
 			 client.close();
 		 } catch (MqttException e) {
 				logger.error("", e);  	
-		 }
+		 } catch (InterruptedException e) {
+			 
+			 logger.error("", e);  
+		 } 
 		
 	}
 

@@ -20,7 +20,7 @@ public class AppShutdownEvent implements ApplicationListener<ContextClosedEvent>
 	}
 	@Override
     public void onApplicationEvent(ContextClosedEvent event) {
-		mqtt.cleanUp();
+		//mqtt.cleanUp();
          
     }
 }
