@@ -63,6 +63,7 @@ public class mqttMain implements MqttCallback{
 					client.setCallback(mqttMain.this);
 					client.connect(option);
 					Thread.sleep(2000);  
+					
 					client.subscribe(topic);
 					
 					while(subscribeThreadLifeFlag == true) {
