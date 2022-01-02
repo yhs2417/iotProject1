@@ -9,7 +9,9 @@ branches:
 cache:
   directories:
     - $HOME/.m2
- 
+
+script: 
+  - iot001/mvnw clean package
 
 before_install:
   - chmod +x iot001/mvnw
