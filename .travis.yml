@@ -17,4 +17,4 @@ before_install:
 notifications:
   email:
     recipients:
-      - yhs241@gmail.com
+      - $EMAIL

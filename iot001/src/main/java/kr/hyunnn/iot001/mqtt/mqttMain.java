@@ -2,6 +2,10 @@ package kr.hyunnn.iot001.mqtt;
 
  
 
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -24,7 +28,6 @@ public class mqttMain implements MqttCallback{
     private MqttConnectOptions option;
     private Thread subscribeThread;
     private  boolean subscribeThreadLifeFlag = true;
-    private  boolean subscribeThreadWorkingFlag = false;
     
     MqttMessage message = new MqttMessage();
     private JSONParser parser = new JSONParser();
@@ -33,7 +36,8 @@ public class mqttMain implements MqttCallback{
 	private Object obj;
 	private double humidity;
 	private double temperature;
- 
+	LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
+	
 	private WebSocketHandler webSocketHandler;
 	private MqttRecordsService mqttRecordsService;
 
@@ -67,11 +71,7 @@ public class mqttMain implements MqttCallback{
 					client.subscribe(topic);
 					
 					while(subscribeThreadLifeFlag == true) {
-						if (subscribeThreadWorkingFlag == true) {
-							logger.info("WorkingFlag ON");
-						} else {
-							Thread.yield();
-						}
+						queue.take();
 					}
 					logger.info("mqtt 멀티스레드 종료");
 
@@ -90,9 +90,8 @@ public class mqttMain implements MqttCallback{
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		logger.info("Mqtt 메세지 도착");
-		subscribeThreadWorkingFlag = true;
-
-		//Yield()로 실행 대기에 있다가 메세지 도착 이벤트를 잡을수 있을까?
+		queue.add("A"); //깨워야 할까?
+		
 		if (topic.equals("temperatureSensor")) {
 			 
 			try {
@@ -116,8 +115,7 @@ public class mqttMain implements MqttCallback{
 				 
 			}
 		}
-		subscribeThreadWorkingFlag = false;
-
+ 
 	}
     public int sendMessage(String topic, String msg) {
 		try {
@@ -145,11 +143,12 @@ public class mqttMain implements MqttCallback{
 	}
 	@Override
 	public void connectionLost(Throwable cause) {
-		 try {
+		try {
 			 logger.info("mqtt connectionLost");
+			 
 			 if (subscribeThread != null) {
 				 setsubscribeThreadLifeFlag(false);
-			 	subscribeThread.join();
+			 	 subscribeThread.join();
 			 }
 			 client.close();
 		 } catch (MqttException e) {
