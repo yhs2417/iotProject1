@@ -9,11 +9,11 @@ cache:
   - "$HOME/.m2"
 before_install:
 - cd iot001/src/main/resources-server 
-- openssl aes-256-cbc -K $encrypted_2f692484526a_key -iv $encrypted_2f692484526a_iv
+- ./openssl aes-256-cbc -K $encrypted_2f692484526a_key -iv $encrypted_2f692484526a_iv
   -in application.properties.enc -out application.properties -d
-- openssl aes-256-cbc -K $encrypted_4ba47dcbeaaf_key -iv $encrypted_4ba47dcbeaaf_iv
+- ./openssl aes-256-cbc -K $encrypted_4ba47dcbeaaf_key -iv $encrypted_4ba47dcbeaaf_iv
   -in logback-spring.xml.enc -out logback-spring.xml -d
-- cd $HOME/iot001
+- cd ../../
 - chmod +x mvnw
 
 script: ./mvnw -Pserver package
