@@ -15,7 +15,7 @@ before_install:
 - cd ../../../
 - chmod +x mvnw
 
-script: ./mvnw -Pserver package
+script: ./mvnw -Pserver install
 
 notifications:
   email:
