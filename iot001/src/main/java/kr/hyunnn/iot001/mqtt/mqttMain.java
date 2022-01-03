@@ -89,8 +89,8 @@ public class mqttMain implements MqttCallback{
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		logger.info("Mqtt 메세지 도착");
-		queue.add("A"); //깨워야 할까?
+		//logger.info("Mqtt 메세지 도착");
+		//queue.add("A"); //깨워야 할까?
 		
 		if (topic.equals("temperatureSensor")) {
 			 
@@ -148,6 +148,7 @@ public class mqttMain implements MqttCallback{
 			 
 			 if (subscribeThread != null) {
 				 setsubscribeThreadLifeFlag(false);
+				 queue.add("A"); 
 			 	 subscribeThread.join();
 			 }
 			 client.close();
