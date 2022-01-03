@@ -3,6 +3,7 @@ package kr.hyunnn.iot001.mqtt;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,9 @@ public class MqttRecordsController {
 	private MqttRecordsService mqttRecordsService;
 	private mqttMain mqtt;
 	
+	@Value("webSocketServerPath")
+	private String webSocketServerPath;
+	
 	@Autowired
 	public MqttRecordsController(MqttRecordsService mqttRecordsService, mqttMain mqtt) {
 		 
@@ -28,6 +32,7 @@ public class MqttRecordsController {
 		//mqtt.init("tcp://10.0.2.220:1883", "102030HClient", "temperatureSensor");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("index.html");
+		mav.addObject("webSocketServerPath", webSocketServerPath);
 		mav.addObject("graphDatas", mqttRecordsService.selectAllMqqtDatas());
 		return mav;
 	}

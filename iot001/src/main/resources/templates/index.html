@@ -50,8 +50,10 @@
 
 <script th:inline="javascript">
 	var mgttWebSocket = null;
-	 
-	mgttWebSocket = new SockJS("http://3.128.3.188:8080/iot1/websocket");
+	/*<![CDATA[*/ 
+	webSocketServerPath = /*[[ ${webSocketServerPath} ]]*/
+	/*]]*/
+	mgttWebSocket = new SockJS(webSocketServerPath);
 	 
 	if (mgttWebSocket != null) {
 		mgttWebSocket.onopen = function(message) {};

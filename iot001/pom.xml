@@ -97,10 +97,10 @@
         	</activation>
    	   </profile>
        <profile>
-       		<id>iot</id>
+       		<id>server</id>
        		<properties>
             	<maven.test.skip>true</maven.test.skip>
-           		<deploy.phase>iot</deploy.phase>
+           		<deploy.phase>server</deploy.phase>
        		</properties>
    	   </profile>
 	</profiles>
@@ -126,7 +126,7 @@
            	 	<filtering>true</filtering>
        		</resource>
         	<resource>   
-            	<directory>../../../resources-${deploy.phase}/</directory>
+            	<directory>src/main/resources-${deploy.phase}</directory>
             	<filtering>true</filtering>
         	</resource>
     	</resources>
