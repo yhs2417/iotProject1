@@ -13,6 +13,7 @@ before_install:
 - tar xf property.tar
 - cd ../../../
 - chmod +x mvnw
+install: true
 script: "./mvnw clean package -P server"
 before_deploy:
 - ls
