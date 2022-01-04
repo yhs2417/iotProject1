@@ -7,4 +7,5 @@ rm -rf ${DEPLOY}/iot001-1/*
 
 echo "압축풀기 & 빌드파일 복사"
 
-cp ${DEPLOY}/deploy/* ${DEPLOY}/iot001-1/
+mv ${DEPLOY}/deploy/META-INF ${DEPLOY}/iot001-1/
+mv ${DEPLOY}/deploy/WEB-INF ${DEPLOY}/iot001-1/
