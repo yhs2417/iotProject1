@@ -9,9 +9,8 @@ cache:
   - "$HOME/.m2"
 before_install:
 - cd iot001/src/main/resources-server
-- openssl aes-256-cbc -K $encrypted_e558ecafaec6_key -iv $encrypted_e558ecafaec6_iv
-  -in properties.tar.enc -out properties.tar -d
-- tar xf properties.jar
+- openssl aes-256-cbc -K $encrypted_bedc26df5945_key -iv $encrypted_bedc26df5945_iv -in property.tar.enc -out property.tar -d
+- tar xf property.tar
 - cd ../../../
 - chmod +x mvnw
 script: "./mvnw clean package -P server"
