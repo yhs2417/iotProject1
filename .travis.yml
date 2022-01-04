@@ -23,12 +23,12 @@ before_deploy:
 - zip -r result.zip ./*
 - mkdir deploy
 - mv result.zip deploy/
-- cd ../
+- cd ../../
 - ls
 
 
 deploy:
-- local_dir: iot001-1/deploy
+- local_dir: target/iot001-1/deploy
   provider: s3
   access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key: "$AWS_SECRET_KEY"
