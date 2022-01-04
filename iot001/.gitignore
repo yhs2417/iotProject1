@@ -3,6 +3,7 @@ target/
 src/main/resources/*.xml
 src/main/resources/*.properties
 src/main/resources-server/*.xml
+src/main/resources-server/*.tar
 src/main/resources-server/*.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
