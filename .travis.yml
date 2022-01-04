@@ -22,7 +22,7 @@ before_deploy:
 - cp appspec.yml ./deploySrc/
 - cd target
 - ls -al
-
+- cd ..
 
 deploy:
   - local_dir: deploySrc 
