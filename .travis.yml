@@ -17,7 +17,32 @@ before_install:
 
 script: ./mvnw clean package -P server
 
-notifications:
-  email:
-    recipients:
-    - "$EMAIL"
+before_deploy:
+- cd iot001
+- mkdir deploy
+- cd target
+- tar cf iotProject.tar iot001-1/
+- mv iotProject.tar ../deploy/ 
+
+deploy:
+  - local_dir: iot001/deploy  
+    provider: s3
+    access_key_id: $AWS_ACCESS_KEY 
+    secret_access_key: $AWS_SECRET_KEY  
+    bucket: $S3_NAME  
+    region: us-east-2
+    skip_cleanup: true
+    acl: private  
+  
+    wait-until-deployed: true
+
+  - provider: codedeploy 
+    access_key_id: $AWS_ACCESS_KEY  
+    secret_access_key: $AWS_SECRET_KEY  
+    bucket: $S3_NAME 
+    key: iotProject.tar 
+    bundle_type: tar
+    application: $CodeDeployName  
+    deployment_group: $CodeDeployGroupName  
+    region: us-east-2
+    wait-until-deployed: true
