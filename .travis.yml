@@ -9,11 +9,9 @@ cache:
   - "$HOME/.m2"
 before_install:
 - cd iot001/src/main/resources-server
-- openssl aes-256-cbc -K $encrypted_92a5ad8cfe2b_key -iv $encrypted_92a5ad8cfe2b_iv
-  -in go.tar.enc -out go.tar -d
-- openssl aes-256-cbc -K $encrypted_4ba47dcbeaaf_key -iv $encrypted_4ba47dcbeaaf_iv
-  -in logback-spring.xml.enc -out logback-spring.xml -d
-- tar xf go.jar
+- openssl aes-256-cbc -K $encrypted_e558ecafaec6_key -iv $encrypted_e558ecafaec6_iv
+  -in properties.tar.enc -out properties.tar -d
+- tar xf properties.jar
 - cd ../../../
 - chmod +x mvnw
 script: "./mvnw clean package -P server"
