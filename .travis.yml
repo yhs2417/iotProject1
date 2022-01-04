@@ -20,9 +20,8 @@ script: ./mvnw clean package -P server
 before_deploy:
 - mkdir -p ./deploySrc/
 - cp appspec.yml ./deploySrc/
-- cd target
-- cp ./iot001-1/ ../deploySrc/
-- cd ../deploySrc/
+- mv target/iot001-1 deploySrc/
+- cd deploySrc
 - tar cf iotProject.tar iot001-1/ appspec.yml
 - cd ../
 
