@@ -35,7 +35,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
-	 
+	 <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+  
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-websocket</artifactId>
@@ -119,6 +120,11 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
 		</plugins>
 		<resources>
         	<resource>  
@@ -126,7 +132,7 @@
            	 	<filtering>true</filtering>
        		</resource>
         	<resource>   
-            	<directory>src/main/resources-${deploy.phase}</directory>
+            	<directory>src/main/resources-${deploy.phase}/</directory>
             	<filtering>true</filtering>
         	</resource>
     	</resources>

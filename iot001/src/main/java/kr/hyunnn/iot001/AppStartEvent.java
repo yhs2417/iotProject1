@@ -12,7 +12,7 @@ public class AppStartEvent implements CommandLineRunner{
 
 	private mqttMain mqtt;
 	
-	@Value("mqttServerPath")
+	@Value("${mqttServerPath}")
 	private String mqttServerPath;
 	
 	@Autowired
@@ -23,6 +23,7 @@ public class AppStartEvent implements CommandLineRunner{
 	}
 	@Override
     public void run(String... args) {
+		System.out.println("--------" + mqttServerPath);
 		mqtt.init(mqttServerPath, "102030HClient", "temperatureSensor");
     }
 }

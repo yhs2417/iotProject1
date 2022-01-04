@@ -17,7 +17,7 @@ public class MqttRecordsController {
 	private MqttRecordsService mqttRecordsService;
 	private mqttMain mqtt;
 	
-	@Value("webSocketServerPath")
+	@Value("${webSocketServerPath}")
 	private String webSocketServerPath;
 	
 	@Autowired
