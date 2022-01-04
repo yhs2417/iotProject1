@@ -18,13 +18,14 @@ before_deploy:
 - cp appspec.yml target/iot001-1/
 - cp deploy.txt target/iot001-1/deploy.sh
 - cd target/iot001-1/ 
-- tar cf result.tar ./*
-- ls
+- zip -r result.zip ./*
+- mkdir deploy
+- mv result.zip deploy/
 - cd ../
 
 
 deploy:
-- local_dir: iot001-1
+- local_dir: iot001-1/deploy
   provider: s3
   access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key: "$AWS_SECRET_KEY"
@@ -37,8 +38,8 @@ deploy:
   access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key: "$AWS_SECRET_KEY"
   bucket: "$S3_NAME"
-  key: result.tar
-  bundle_type: tar
+  key: result.zip
+  bundle_type: zip
   application: "$CodeDeployName"
   deployment_group: "$CodeDeployGroupName"
   region: us-east-2
