@@ -18,14 +18,14 @@ before_install:
 script: ./mvnw clean package -P server
 
 before_deploy:
-- cd iot001
 - mkdir deploy
 - cd target
 - tar cf iotProject.tar iot001-1/
 - mv iotProject.tar ../deploy/ 
+- cd ../
 
 deploy:
-  - local_dir: iot001/deploy  
+  - local_dir: deploy  
     provider: s3
     access_key_id: $AWS_ACCESS_KEY 
     secret_access_key: $AWS_SECRET_KEY  
