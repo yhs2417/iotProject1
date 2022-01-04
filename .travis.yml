@@ -19,7 +19,7 @@ before_deploy:
 - cp deploy.txt target/iot001-1/deploy.sh
 - cd target/iot001-1/ 
 - tar cf result.tar ./*
-- ll
+- ls
 - cd ../
 
 
