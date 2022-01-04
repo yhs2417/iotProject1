@@ -17,6 +17,8 @@ script: "./mvnw clean package -P server"
 before_deploy:
 - cp appspec.yml target/iot001-1/
 - cp deploy.txt target/iot001-1/deploy.sh
+- ls al
+
 deploy:
 - local_dir: target/iot001-1/
   provider: s3
