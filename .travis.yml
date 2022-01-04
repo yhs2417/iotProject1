@@ -15,13 +15,16 @@ before_install:
 - chmod +x mvnw
 script: "./mvnw clean package -P server"
 before_deploy:
+- ls
 - cp appspec.yml target/iot001-1/
 - cp deploy.txt target/iot001-1/deploy.sh
 - cd target/iot001-1/ 
+- ls
 - zip -r result.zip ./*
 - mkdir deploy
 - mv result.zip deploy/
 - cd ../
+- ls
 
 
 deploy:
