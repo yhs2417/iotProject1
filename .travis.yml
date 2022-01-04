@@ -8,42 +8,39 @@ cache:
   directories:
   - "$HOME/.m2"
 before_install:
-- cd iot001/src/main/resources-server 
-- openssl aes-256-cbc -K $encrypted_2f692484526a_key -iv $encrypted_2f692484526a_iv
-  -in application.properties.enc -out application.properties -d
+
+- cd iot001/src/main/resources-server
+- openssl aes-256-cbc -K $encrypted_a1c155ccba16_key -iv $encrypted_a1c155ccba16_iv
+  -in app.tar.enc -out app.tar -d
 - openssl aes-256-cbc -K $encrypted_4ba47dcbeaaf_key -iv $encrypted_4ba47dcbeaaf_iv
   -in logback-spring.xml.enc -out logback-spring.xml -d
+- tar xf app.jar 
 - cd ../../../
 - chmod +x mvnw
 
-script: ./mvnw clean package -P server
+script: "./mvnw clean package -P server"
 
 before_deploy:
-- mkdir -p ./deploySrc/
-- cp appspec.yml ./deploySrc/
-- cd target
-- ls -al
-- cd ..
+- cp appspec.yml target/iot001-1/
+- cp deploy.txt target/iot001-1/deploy.sh 
 
 deploy:
-  - local_dir: deploySrc 
-    provider: s3
-    access_key_id: $AWS_ACCESS_KEY 
-    secret_access_key: $AWS_SECRET_KEY  
-    bucket: $S3_NAME  
-    region: us-east-2
-    skip_cleanup: true
-    acl: private  
-  
-    wait-until-deployed: true
-
-  - provider: codedeploy 
-    access_key_id: $AWS_ACCESS_KEY  
-    secret_access_key: $AWS_SECRET_KEY  
-    bucket: $S3_NAME 
-    key: iotProject.tar 
-    bundle_type: tar
-    application: $CodeDeployName  
-    deployment_group: $CodeDeployGroupName  
-    region: us-east-2
-    wait-until-deployed: true
+- local_dir: target/iot001-1/
+  provider: s3
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
+  bucket: "$S3_NAME"
+  region: us-east-2
+  skip_cleanup: true
+  acl: private
+  wait-until-deployed: true
+- provider: codedeploy
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
+  bucket: "$S3_NAME"
+  key: iotProject.tar
+  bundle_type: tar
+  application: "$CodeDeployName"
+  deployment_group: "$CodeDeployGroupName"
+  region: us-east-2
+  wait-until-deployed: true

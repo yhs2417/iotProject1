@@ -1,0 +1,10 @@
+#!/bin/bash
+DEPLOY=/home/ec2-user/app
+
+echo "> 기존 빌드 삭제"
+
+rm -rf ${DEPLOY}/iot001-1/*
+
+echo "압축풀기 & 빌드파일 복사"
+
+cp ${DEPLOY}/deploy/* ${DEPLOY}/iot001-1/
