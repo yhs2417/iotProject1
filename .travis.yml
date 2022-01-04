@@ -18,6 +18,7 @@ before_install:
 script: ./mvnw clean package -P server
 
 before_deploy:
+- mkdir ./deploy/
 - cd target
 - tar cf iotProject.tar iot001-1/
 - mv iotProject.tar ../deploy/ 
