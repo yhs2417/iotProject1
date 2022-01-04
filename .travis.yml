@@ -22,7 +22,7 @@ before_deploy:
 - cd target/iot001-1/ 
 - ls
 - zip -r result.zip ./*
-- mkdir deploy
+- mkdir -p deploy
 - mv result.zip deploy/
 - cd ../../
 - ls
