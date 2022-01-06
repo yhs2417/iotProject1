@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import kr.hyunnn.iot001.domain.mqtt.MqttRecordsEntity;
 
 @Service
 public class MqttRecordsService {
+	private Logger logger = LoggerFactory.getLogger(MqttRecordsService.class);
 
 	IMqttRecordsRepository iMqttRecordsRepository;
 	 
@@ -50,9 +53,10 @@ public class MqttRecordsService {
 		rowDataList.add("温度");
 
 		responseList.add(rowDataList) ;
+		long rows = iMqttRecordsRepository.count();
 		
-		if (iMqttRecordsRepository.count() != 0 ) {
-
+		if (rows != 0 ) {
+			logger.info("all select rows=" + rows);
 			for (MqttRecordsEntity i : iMqttRecordsRepository.findAll()) {
 				rowDataList = new ArrayList<>();
 				rowDataList.add(i.getInsertTime());
