@@ -11,10 +11,10 @@ header h1 {
   padding : 0.4rem 0
 }
 header h1 a {
-  margin : 0 auto; display : block ; width : 3rem ;  height : 1.31rem ; background : url("../images/logo.png") no-repeat center/cover 
+  margin : 0 auto; display : block ; width : 4.54rem ;  height : 2rem ; background : url("../images/logo.png") no-repeat center/contain
 }
 header .menuBtn {
-  position : absolute ; width : 1rem ; height: 100% ; top : 0 ; left : 0.5rem ; background : url("../images/menu.png") no-repeat center/contain 
+  position : absolute ; width : 1.5rem ; height: 100% ; top : 0 ; left : 0.5rem ; background : url("../images/menu.png") no-repeat center/contain 
 }
 header nav {
   position : fixed; width: 45% ; top : 0 ; height : 100vh ; display : none ; z-index : 101 ; background-color : white;
