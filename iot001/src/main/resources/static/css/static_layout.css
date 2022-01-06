@@ -30,10 +30,10 @@ header .top li  {
 ;
 }
 header .rebootBtn{
-  display : block ; height : 100% ; padding : 0 5px ; background : url("../images/power.png") no-repeat center 6.5px/20px  ;  
+  display : block ; height : 100% ; padding : 0 0.3125rem ; background : url("../images/power.png") no-repeat center 0.406rem/1.25rem  ;  
 }
 header .rebootBtn span {
-  display : block ; padding-top: 26.5px;
+  display : block ; padding-top: 1.656rem;
 }
 
 header .gnb {
