@@ -17,7 +17,7 @@ header .menuBtn {
   position : absolute ; width : 1.5rem ; height: 100% ; top : 0 ; left : 0.5rem ; background : url("../images/menu.png") no-repeat center/contain 
 }
 header nav {
-  position : fixed; width: 45% ; top : 0 ; height : 100vh ; display : none ; z-index : 101 ; background-color : white;
+  position : fixed; width: 60% ; top : 0 ; height : 100vh ; display : none ; z-index : 101 ; background-color : white;
 }
 header nav li  {
  font-size : 0.625rem;  
@@ -49,10 +49,10 @@ header .gnb li span {
  padding-left : 2rem ;  
 }
 header .gnb li:nth-of-type(1) a {
-  background : url("../images/graph.png") no-repeat 1rem center/18px; 
+  background : url("../images/graph.png") no-repeat 1rem center/1.125rem; 
 }
 header .gnb li:nth-of-type(2) a {
-  background : url("../images/skills.png") no-repeat 1rem center/18px; 
+  background : url("../images/skills.png") no-repeat 1rem center/1.125rem; 
 }
 
 
