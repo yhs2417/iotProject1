@@ -7,9 +7,7 @@
 <th:block layout:fragment="head_content">
 	<link rel="stylesheet" th:href="@{/css/index.css}">
 	<link rel="stylesheet" th:href="@{/css/graph.css}">
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
    	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </th:block>
 
 
@@ -47,6 +45,9 @@
 </th:block>
 
 <th:block layout:fragment="js_content">
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script th:inline="javascript">
 	var mgttWebSocket = null;

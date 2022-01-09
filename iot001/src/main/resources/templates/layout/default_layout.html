@@ -8,8 +8,6 @@
 	<link rel="stylesheet" th:href="@{/css/default.css}">
  	<link rel="stylesheet" th:href="@{/css/static_layout.css}">
 	<link rel="stylesheet" th:href="@{/css/media.css}">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 	<th:block layout:fragment="head_content"></th:block>
 
 </head>
@@ -39,9 +37,9 @@
     <th:block layout:fragment="main_content">
     </th:block>
      
-    <th:block layout:fragment="js_content">
-    </th:block>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript">
   $(".menuBtn").on("click", function(){
     $("header nav").show(200);
@@ -53,5 +51,9 @@
     });
 
 </script>
+   
+    <th:block layout:fragment="js_content">
+    
+    </th:block>
 </body>
 </html>
