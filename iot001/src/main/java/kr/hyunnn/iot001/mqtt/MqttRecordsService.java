@@ -85,7 +85,7 @@ public class MqttRecordsService {
 		
 		if (iMqttRecordsRepository.count() != 0 ) {
 
-			for (MqttRecordsEntity i : iMqttRecordsRepository.findByInsertTimeGreaterThanEqualAndInsertTimeLessThanEqual(startDate, endDate)) {
+			for (MqttRecordsEntity i : iMqttRecordsRepository.findByInsertTimeGreaterThanEqualAndInsertTimeLessThanEqualOrderByInsertTimeAsc(startDate, endDate)) {
 				rowDataList = new ArrayList<>();
 				rowDataList.add(i.getInsertTime().format(DateTimeFormatter.ofPattern("MM-dd")));
 
