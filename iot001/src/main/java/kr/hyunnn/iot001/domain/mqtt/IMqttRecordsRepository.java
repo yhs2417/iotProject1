@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface IMqttRecordsRepository extends CrudRepository<MqttRecordsEntity, Long>{
 
 	public List<MqttRecordsEntity> findByInsertTimeGreaterThanEqualAndInsertTimeLessThanEqualOrderByInsertTimeAsc(LocalDate x, LocalDate y);
+	public List<MqttRecordsEntity> findAllOrderByInsertTimeAsc();
 
 	@Modifying(clearAutomatically = true)
 	@Query(value = "select * from records where insert_time between ?1 AND ?2", nativeQuery=true )

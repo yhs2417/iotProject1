@@ -57,7 +57,7 @@ public class MqttRecordsService {
 		
 		if (rows != 0 ) {
 			logger.info("all select rows=" + rows);
-			for (MqttRecordsEntity i : iMqttRecordsRepository.findAll()) {
+			for (MqttRecordsEntity i : iMqttRecordsRepository.findAllOrderByInsertTimeAsc()) {
 				rowDataList = new ArrayList<>();
 				rowDataList.add(i.getInsertTime().format(DateTimeFormatter.ofPattern("MM-dd")));
 				rowDataList.add(i.getHumidity());
