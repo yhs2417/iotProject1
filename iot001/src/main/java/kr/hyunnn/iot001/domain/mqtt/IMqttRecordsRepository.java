@@ -14,7 +14,7 @@ public interface IMqttRecordsRepository extends CrudRepository<MqttRecordsEntity
 	public List<MqttRecordsEntity> findByInsertTimeGreaterThanEqualAndInsertTimeLessThanEqual(LocalDate x, LocalDate y);
 
 	@Modifying(clearAutomatically = true)
-	@Query(value = "select id, humidity, temperature, to_char(insert_time, 'MM-DD') as insert_time from records where insert_time >=?1 AND insert_time <=?2", nativeQuery=true )
+	@Query(value = "select id, humidity, temperature, to_char(insert_time, 'MM-DD') as insert_time from records where insert_time >=TO_DATE(?1, 'YYYY-MM-DD') AND insert_time <=TO_DATE(?2, 'YYYY-MM-DD'", nativeQuery=true )
 	public List<MqttRecordsEntity> selectRecordsByDate(LocalDate x, LocalDate y);
 
 }
