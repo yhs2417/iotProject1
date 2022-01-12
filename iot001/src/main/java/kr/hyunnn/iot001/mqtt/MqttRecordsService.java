@@ -48,9 +48,9 @@ public class MqttRecordsService {
 		responseList = new ArrayList<>();
 		rowDataList = new ArrayList<>();
 		
-		rowDataList.add("時間");
-		rowDataList.add("湿度");
-		rowDataList.add("温度");
+		rowDataList.add("시간");
+		rowDataList.add("습도");
+		rowDataList.add("온도");
 
 		responseList.add(rowDataList);
 		
@@ -78,9 +78,9 @@ public class MqttRecordsService {
 		responseList = new ArrayList<>();
 		rowDataList = new ArrayList<>();
 	
-		rowDataList.add("時間");
-		rowDataList.add("湿度");
-		rowDataList.add("温度");
+		rowDataList.add("시간");
+		rowDataList.add("습도");
+		rowDataList.add("온도");
 
 		responseList.add(rowDataList) ;
 		
