@@ -52,12 +52,14 @@ public class MqttRecordsService {
 		rowDataList.add("湿度");
 		rowDataList.add("温度");
 
-		responseList.add(rowDataList) ;
+		responseList.add(rowDataList);
+		
 		long rows = iMqttRecordsRepository.count();
 		
 		if (rows != 0 ) {
 			logger.info("all select rows=" + rows);
 			for (MqttRecordsEntity i : iMqttRecordsRepository.findAllByOrderByInsertTimeAsc()) {
+				rowDataList = new ArrayList<>();
 				rowDataList.add(i.getInsertTime().format(DateTimeFormatter.ofPattern("MM-dd")));
 				rowDataList.add(i.getHumidity());
 				rowDataList.add(i.getTemperature());
