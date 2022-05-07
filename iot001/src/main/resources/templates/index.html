@@ -46,10 +46,10 @@
 
 <th:block layout:fragment="js_content">
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script th:inline="javascript">
+	<script th:inline="javascript">
 	var mgttWebSocket = null;
 	/*<![CDATA[*/ 
 	webSocketServerPath = /*[[ ${webSocketServerPath} ]]*/
@@ -139,7 +139,7 @@
  
 	$("#graph_request_btn").on("click",
 		function graph_request_btn_onclick() {
-		//toDATE 가 더 크게 수정해야함.+ 뒤로가기버튼으로 지울시
+		 
 		//mgttWebSocket.send("D" + startDate + "&" + endDate);
 			$.ajax({
 				type : "POST",
@@ -159,9 +159,7 @@
 				} 
 			}); //ajax 
 	 });	  
-</script>
+	</script>
 </th:block>
-
-
 
 </html>

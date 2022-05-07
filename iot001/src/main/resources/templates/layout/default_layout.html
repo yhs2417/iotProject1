@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>iot Project</title>
+	<link rel="stylesheet" th:href="@{/css/default.css}">
+ 	<link rel="stylesheet" th:href="@{/css/static_layout.css}">
+	<link rel="stylesheet" th:href="@{/css/media.css}">
+	<th:block layout:fragment="head_content"></th:block>
+
+</head>
+<body>
+	<header>
+        <h1>
+            <a th:href="@{/}"></a>
+            <button class="menuBtn"></button>
+        </h1>                 
+        <nav>
+            <ul class="top">
+			 	<li>
+			 	  <a class="rebootBtn" onclick="alert('すみません. 準備中でございます')">
+				    <span>電原</span>
+				  </a>
+				</li>
+            </ul>
+            <ul class="gnb">
+              <li><a onclick="alert('すみません. 準備中でございます')"><span>会員情報</span></a></li>
+              <li><a th:href="@{/skills}"><span>スキル</span></a></li> 
+            </ul>
+        </nav>
+    </header>
+    <div class="dim">
+    </div>
+
+    <th:block layout:fragment="main_content">
+    </th:block>
+     
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript">
+  $(".menuBtn").on("click", function(){
+    $("header nav").show(200);
+    $(".dim").show();
+    });
+ $(".dim").on("click", function(){
+    $("header nav").hide(200);
+     $(".dim").hide();
+    });
+
+</script>
+   
+    <th:block layout:fragment="js_content">
+    
+    </th:block>
+</body>
+</html>
